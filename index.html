@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수수료 정책 중복 적용 계산기</title>
+    <title>수수료 정책 3가지 방안 비교 계산기</title>
     <style>
         * {
             margin: 0;
@@ -18,7 +18,7 @@
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1800px;
             margin: 0 auto;
         }
         
@@ -48,7 +48,6 @@
             display: flex;
             gap: 30px;
             align-items: center;
-            margin-bottom: 15px;
         }
         
         .input-group {
@@ -69,7 +68,6 @@
             border: 2px solid #ddd;
             border-radius: 6px;
             font-size: 16px;
-            transition: border-color 0.3s;
         }
         
         .input-group input:focus {
@@ -86,7 +84,6 @@
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
             margin-top: 28px;
         }
         
@@ -96,27 +93,27 @@
         
         .results-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
         }
         
-        .result-section {
+        .column {
             background: white;
             padding: 25px;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         
-        .result-header {
-            font-size: 20px;
-            font-weight: 700;
+        h2 {
             color: #333;
-            margin-bottom: 5px;
-            padding-bottom: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
             border-bottom: 3px solid #4285f4;
+            padding-bottom: 10px;
         }
         
-        .result-description {
+        .description {
             font-size: 13px;
             color: #666;
             margin-bottom: 20px;
@@ -126,113 +123,90 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 13px;
-        }
-        
-        th, td {
-            padding: 10px 8px;
-            text-align: right;
-            border-bottom: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            font-size: 12px;
         }
         
         th {
             background-color: #f8f9fa;
+            padding: 10px 8px;
+            text-align: left;
             font-weight: 600;
-            color: #333;
-            font-size: 12px;
+            border-bottom: 2px solid #dee2e6;
+            font-size: 11px;
         }
         
-        td:first-child, th:first-child {
-            text-align: left;
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #f1f3f4;
         }
         
         .tier-name {
             font-weight: 500;
-            color: #555;
+            color: #333;
         }
         
         .total-row {
-            background-color: #f8f9fa;
             font-weight: 700;
+            background-color: #f8f9fa;
+            border-top: 2px solid #dee2e6;
         }
         
-        .summary-box {
-            background-color: #e8f0fe;
+        .summary {
+            background-color: #f8f9fa;
             padding: 15px;
             border-radius: 6px;
-            margin-top: 15px;
+            margin-bottom: 15px;
         }
         
         .summary-item {
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;
-            font-size: 14px;
+            font-size: 13px;
         }
         
         .summary-item:last-child {
             margin-bottom: 0;
             padding-top: 10px;
-            border-top: 2px solid #4285f4;
+            border-top: 2px solid #dee2e6;
             font-weight: 700;
-            font-size: 16px;
-        }
-        
-        .summary-label {
-            color: #333;
-        }
-        
-        .summary-value {
-            color: #1967d2;
-            font-weight: 600;
-        }
-        
-        .comparison-box {
-            background-color: #fff3cd;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 20px;
-            border-left: 4px solid #ffc107;
-        }
-        
-        .comparison-title {
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-        
-        .comparison-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 13px;
-        }
-        
-        .highlight {
-            background-color: #fff9c4;
-        }
-        
-        @media (max-width: 1200px) {
-            .results-container {
-                grid-template-columns: 1fr;
-            }
         }
         
         .note {
             background-color: #f1f3f4;
             padding: 12px;
             border-radius: 6px;
-            margin-top: 15px;
-            font-size: 12px;
+            font-size: 11px;
             color: #666;
+            line-height: 1.5;
+        }
+        
+        .comparison {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .comparison h2 {
+            border-bottom-color: #34a853;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+        }
+        
+        @media (max-width: 1400px) {
+            .results-container {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>수수료 정책 중복 적용 계산기</h1>
+        <h1>수수료 정책 3가지 방안 비교 계산기</h1>
         <p class="subtitle">구간별 수수료 할인 + 누적 거래액 기반 수수료 인하 중복 적용 시뮬레이션</p>
         
         <div class="input-section">
@@ -243,7 +217,7 @@
                 </div>
                 <div class="input-group">
                     <label for="monthlyAmount">해당 월 결제금액 (원)</label>
-                    <input type="number" id="monthlyAmount" value="400000000" step="1000000">
+                    <input type="number" id="monthlyAmount" value="200000000" step="1000000">
                 </div>
                 <button class="calc-button" onclick="calculate()">계산하기</button>
             </div>
@@ -251,11 +225,9 @@
         
         <div class="results-container">
             <!-- 방안 1 -->
-            <div class="result-section">
-                <div class="result-header">방안 1: 할인율 누적 적용</div>
-                <div class="result-description">
-                    인하된 기본 수수료율을 기준으로 모든 구간에 할인율을 추가 적용합니다.
-                </div>
+            <div class="column">
+                <h2>방안 1: 할인율 누적 적용</h2>
+                <p class="description">인하된 기본 수수료율을 기준으로 모든 구간에 할인율을 추가 적용합니다.</p>
                 
                 <table id="table1">
                     <thead>
@@ -268,36 +240,33 @@
                             <th>할인액</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody1">
-                    </tbody>
+                    <tbody id="tbody1"></tbody>
                 </table>
-                
-                <div class="summary-box">
+
+                <div class="summary">
                     <div class="summary-item">
-                        <span class="summary-label">총 수수료 (부가세 제외)</span>
-                        <span class="summary-value" id="total1">-</span>
+                        <span>총 수수료 (부가세 제외)</span>
+                        <strong id="total1">₩0</strong>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">부가세 (10%)</span>
-                        <span class="summary-value" id="vat1">-</span>
+                        <span>부가세 (10%)</span>
+                        <strong id="vat1">₩0</strong>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">최종 수수료 (부가세 포함)</span>
-                        <span class="summary-value" id="final1">-</span>
+                        <span>최종 수수료 (부가세 포함)</span>
+                        <strong id="final1">₩0</strong>
                     </div>
                 </div>
-                
+
                 <div class="note">
                     <strong>특징:</strong> 모든 구간에서 할인 혜택을 받을 수 있어 고객사 만족도가 높습니다.
                 </div>
             </div>
-            
+
             <!-- 방안 2 -->
-            <div class="result-section">
-                <div class="result-header">방안 2: 구간 기준 상향</div>
-                <div class="result-description">
-                    할인 후 수수료율이 기본 수수료율보다 낮은 구간만 할인을 적용합니다.
-                </div>
+            <div class="column">
+                <h2>방안 2: 구간 기준 상향</h2>
+                <p class="description">5% 기준 할인율 적용, 단 역전 현상 방지를 위해 기본 수수료율보다 낮은 구간만 할인 적용합니다.</p>
                 
                 <table id="table2">
                     <thead>
@@ -310,48 +279,100 @@
                             <th>할인액</th>
                         </tr>
                     </thead>
-                    <tbody id="tbody2">
-                    </tbody>
+                    <tbody id="tbody2"></tbody>
                 </table>
-                
-                <div class="summary-box">
+
+                <div class="summary">
                     <div class="summary-item">
-                        <span class="summary-label">총 수수료 (부가세 제외)</span>
-                        <span class="summary-value" id="total2">-</span>
+                        <span>총 수수료 (부가세 제외)</span>
+                        <strong id="total2">₩0</strong>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">부가세 (10%)</span>
-                        <span class="summary-value" id="vat2">-</span>
+                        <span>부가세 (10%)</span>
+                        <strong id="vat2">₩0</strong>
                     </div>
                     <div class="summary-item">
-                        <span class="summary-label">최종 수수료 (부가세 포함)</span>
-                        <span class="summary-value" id="final2">-</span>
+                        <span>최종 수수료 (부가세 포함)</span>
+                        <strong id="final2">₩0</strong>
                     </div>
                 </div>
-                
+
                 <div class="note">
-                    <strong>특징:</strong> 역전 현상을 완전히 차단하여 예측 가능성이 높습니다.
+                    <strong>특징:</strong> 역전 현상을 완전히 차단하며, 5% 기준 할인율을 고정 적용합니다. (강조 행은 실제 할인 적용 구간)
+                </div>
+            </div>
+
+            <!-- 방안 3 -->
+            <div class="column">
+                <h2>방안 3: 구간별 할인만 적용</h2>
+                <p class="description">기존 5% 기준 구간별 수수료 할인 정책만 적용합니다. (누적 거래액 인하 없음)</p>
+                
+                <table id="table3">
+                    <thead>
+                        <tr>
+                            <th>구간</th>
+                            <th>대상금액</th>
+                            <th>할인율</th>
+                            <th>적용율</th>
+                            <th>수수료</th>
+                            <th>할인액</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody3"></tbody>
+                </table>
+
+                <div class="summary">
+                    <div class="summary-item">
+                        <span>총 수수료 (부가세 제외)</span>
+                        <strong id="total3">₩0</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>부가세 (10%)</span>
+                        <strong id="vat3">₩0</strong>
+                    </div>
+                    <div class="summary-item">
+                        <span>최종 수수료 (부가세 포함)</span>
+                        <strong id="final3">₩0</strong>
+                    </div>
+                </div>
+
+                <div class="note">
+                    <strong>특징:</strong> 기존 구간별 할인 정책(5% 기준)만 적용되어, 기본 수수료율 인하 혜택이 없습니다.
                 </div>
             </div>
         </div>
-        
-        <div class="comparison-box">
-            <div class="comparison-title">📊 두 방안 비교</div>
-            <div class="comparison-item">
-                <span>방안 1 절감액 (기본 5% 대비):</span>
-                <span id="saving1">-</span>
-            </div>
-            <div class="comparison-item">
-                <span>방안 2 절감액 (기본 5% 대비):</span>
-                <span id="saving2">-</span>
-            </div>
-            <div class="comparison-item" style="font-weight: 700; margin-top: 10px; padding-top: 10px; border-top: 1px solid #ffc107;">
-                <span>차액 (방안1 - 방안2):</span>
-                <span id="difference">-</span>
+
+        <div class="comparison">
+            <h2>📊 방안 비교</h2>
+            <div class="summary">
+                <div class="summary-item">
+                    <span>방안 1 절감액 (기본 5% 대비):</span>
+                    <strong id="saving1">₩0 (0.0%)</strong>
+                </div>
+                <div class="summary-item">
+                    <span>방안 2 절감액 (기본 5% 대비):</span>
+                    <strong id="saving2">₩0 (0.0%)</strong>
+                </div>
+                <div class="summary-item">
+                    <span>방안 3 절감액 (기본 5% 대비):</span>
+                    <strong id="saving3">₩0 (0.0%)</strong>
+                </div>
+                <div class="summary-item highlight">
+                    <span>차액 (방안1 - 방안2):</span>
+                    <strong id="difference12">₩0</strong>
+                </div>
+                <div class="summary-item highlight">
+                    <span>차액 (방안1 - 방안3):</span>
+                    <strong id="difference13">₩0</strong>
+                </div>
+                <div class="summary-item highlight">
+                    <span>차액 (방안2 - 방안3):</span>
+                    <strong id="difference23">₩0</strong>
+                </div>
             </div>
         </div>
     </div>
-    
+
     <script>
         const tiers = [
             { name: "3천만원 미만", min: 0, max: 30000000, discountRate: 0 },
@@ -360,30 +381,30 @@
             { name: "1억원~3억원", min: 100000000, max: 300000000, discountRate: 0.30 },
             { name: "3억원 초과", min: 300000000, max: Infinity, discountRate: 0.50 }
         ];
-        
+
         function formatNumber(num) {
             return '₩' + Math.round(num).toLocaleString('ko-KR');
         }
-        
-        function formatPercent(num) {
-            return (num * 100).toFixed(1) + '%';
+
+        function formatPercent(rate) {
+            return (rate * 100).toFixed(2) + '%';
         }
-        
+
         function calculateTierAmount(totalAmount, tier) {
             if (totalAmount <= tier.min) return 0;
-            if (totalAmount >= tier.max) return tier.max - tier.min;
-            return totalAmount - tier.min;
+            if (totalAmount <= tier.max) return totalAmount - tier.min;
+            return tier.max - tier.min;
         }
-        
+
         function calculate() {
             const baseRate = parseFloat(document.getElementById('baseRate').value) / 100;
             const monthlyAmount = parseFloat(document.getElementById('monthlyAmount').value);
-            
-            if (isNaN(baseRate) || isNaN(monthlyAmount) || monthlyAmount <= 0) {
+
+            if (isNaN(baseRate) || isNaN(monthlyAmount) || baseRate < 0 || monthlyAmount < 0) {
                 alert('올바른 값을 입력해주세요.');
                 return;
             }
-            
+
             // 방안 1: 할인율 누적 적용
             let tbody1 = document.getElementById('tbody1');
             tbody1.innerHTML = '';
@@ -414,8 +435,20 @@
                     tbody1.innerHTML += row;
                 }
             });
-            
-            // 방안 2: 구간 기준 상향
+
+            const totalRow1 = `
+                <tr class="total-row">
+                    <td>합계</td>
+                    <td>${formatNumber(monthlyAmount)}</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>${formatNumber(total1)}</td>
+                    <td>${formatNumber(totalDiscount1)}</td>
+                </tr>
+            `;
+            tbody1.innerHTML += totalRow1;
+
+            // 방안 2: 구간 기준 상향 (5% 기준 고정 할인율)
             let tbody2 = document.getElementById('tbody2');
             tbody2.innerHTML = '';
             let total2 = 0;
@@ -426,18 +459,18 @@
                 if (tierAmount > 0) {
                     const baseFee = tierAmount * baseRate;
                     
-                    // 기존 구간별 할인 정책의 원래 수수료율 (5% 기준)
-                    const originalDiscountedRate = 0.05 * (1 - tier.discountRate);
+                    // 5% 기준 고정 할인율 적용
+                    const fixedDiscountedRate = 0.05 * (1 - tier.discountRate);
                     
-                    // 원래 할인 수수료율이 현재 기본 수수료율보다 낮은 경우만 할인 적용
+                    // 5% 기준 할인 수수료율이 현재 기본 수수료율보다 낮은 경우만 적용
                     let actualFee, discount, appliedRate;
-                    if (originalDiscountedRate < baseRate) {
-                        // 할인 적용: 기본 수수료율에 할인율 적용
-                        appliedRate = baseRate * (1 - tier.discountRate);
-                        actualFee = tierAmount * appliedRate;
+                    if (fixedDiscountedRate < baseRate) {
+                        // 할인 적용: 5% 기준 할인 수수료율 적용
+                        appliedRate = fixedDiscountedRate;
+                        actualFee = tierAmount * fixedDiscountedRate;
                         discount = baseFee - actualFee;
                     } else {
-                        // 할인 미적용: 기본 수수료율 적용
+                        // 할인 미적용: 기본 수수료율 적용 (역전 방지)
                         appliedRate = baseRate;
                         actualFee = baseFee;
                         discount = 0;
@@ -460,20 +493,7 @@
                     tbody2.innerHTML += row;
                 }
             });
-            
-            // 합계 행 추가
-            const totalRow1 = `
-                <tr class="total-row">
-                    <td>합계</td>
-                    <td>${formatNumber(monthlyAmount)}</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>${formatNumber(total1)}</td>
-                    <td>${formatNumber(totalDiscount1)}</td>
-                </tr>
-            `;
-            tbody1.innerHTML += totalRow1;
-            
+
             const totalRow2 = `
                 <tr class="total-row">
                     <td>합계</td>
@@ -485,40 +505,100 @@
                 </tr>
             `;
             tbody2.innerHTML += totalRow2;
+
+            // 방안 3: 구간별 할인만 적용 (5% 기준, 항상 적용)
+            let tbody3 = document.getElementById('tbody3');
+            tbody3.innerHTML = '';
+            let total3 = 0;
+            let totalDiscount3 = 0;
             
+            tiers.forEach(tier => {
+                const tierAmount = calculateTierAmount(monthlyAmount, tier);
+                if (tierAmount > 0) {
+                    const originalBaseFee = tierAmount * 0.05; // 항상 5% 기준
+                    const appliedRate = 0.05 * (1 - tier.discountRate);
+                    const actualFee = tierAmount * appliedRate;
+                    const discount = originalBaseFee - actualFee;
+                    
+                    total3 += actualFee;
+                    totalDiscount3 += discount;
+                    
+                    const row = `
+                        <tr>
+                            <td class="tier-name">${tier.name}</td>
+                            <td>${formatNumber(tierAmount)}</td>
+                            <td>${formatPercent(tier.discountRate)}</td>
+                            <td>${formatPercent(appliedRate)}</td>
+                            <td>${formatNumber(actualFee)}</td>
+                            <td>${formatNumber(discount)}</td>
+                        </tr>
+                    `;
+                    tbody3.innerHTML += row;
+                }
+            });
+
+            const totalRow3 = `
+                <tr class="total-row">
+                    <td>합계</td>
+                    <td>${formatNumber(monthlyAmount)}</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>${formatNumber(total3)}</td>
+                    <td>${formatNumber(totalDiscount3)}</td>
+                </tr>
+            `;
+            tbody3.innerHTML += totalRow3;
+
             // 요약 정보 업데이트
             const vat1 = total1 * 0.1;
+            const vat2 = total2 * 0.1;
+            const vat3 = total3 * 0.1;
             const final1 = total1 + vat1;
+            const final2 = total2 + vat2;
+            const final3 = total3 + vat3;
+
             document.getElementById('total1').textContent = formatNumber(total1);
             document.getElementById('vat1').textContent = formatNumber(vat1);
             document.getElementById('final1').textContent = formatNumber(final1);
-            
-            const vat2 = total2 * 0.1;
-            const final2 = total2 + vat2;
+
             document.getElementById('total2').textContent = formatNumber(total2);
             document.getElementById('vat2').textContent = formatNumber(vat2);
             document.getElementById('final2').textContent = formatNumber(final2);
-            
+
+            document.getElementById('total3').textContent = formatNumber(total3);
+            document.getElementById('vat3').textContent = formatNumber(vat3);
+            document.getElementById('final3').textContent = formatNumber(final3);
+
             // 비교 정보
             const originalFee = monthlyAmount * 0.05 * 1.1;
             const saving1 = originalFee - final1;
             const saving2 = originalFee - final2;
-            const difference = final2 - final1;
-            
+            const saving3 = originalFee - final3;
+
             document.getElementById('saving1').textContent = formatNumber(saving1) + ' (' + formatPercent(saving1/originalFee) + ')';
             document.getElementById('saving2').textContent = formatNumber(saving2) + ' (' + formatPercent(saving2/originalFee) + ')';
-            
-            let differenceText;
-            if (Math.abs(difference) < 1) {
-                differenceText = formatNumber(0) + ' (동일)';
-            } else if (difference > 0) {
-                differenceText = formatNumber(difference) + ' (방안2가 더 비쌈)';
-            } else {
-                differenceText = formatNumber(Math.abs(difference)) + ' (방안1이 더 비쌈)';
+            document.getElementById('saving3').textContent = formatNumber(saving3) + ' (' + formatPercent(saving3/originalFee) + ')';
+
+            // 차액 계산
+            const diff12 = final1 - final2;
+            const diff13 = final1 - final3;
+            const diff23 = final2 - final3;
+
+            function formatDifference(diff) {
+                if (Math.abs(diff) < 1) {
+                    return formatNumber(0) + ' (동일)';
+                } else if (diff > 0) {
+                    return formatNumber(diff) + ' (앞 방안이 더 비쌈)';
+                } else {
+                    return formatNumber(Math.abs(diff)) + ' (뒤 방안이 더 비쌈)';
+                }
             }
-            document.getElementById('difference').textContent = differenceText;
+
+            document.getElementById('difference12').textContent = formatDifference(diff12);
+            document.getElementById('difference13').textContent = formatDifference(diff13);
+            document.getElementById('difference23').textContent = formatDifference(diff23);
         }
-        
+
         // 페이지 로드 시 자동 계산
         window.onload = calculate;
     </script>
